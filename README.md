@@ -6,6 +6,6 @@ auto_iperf	-> eth0 speed
 auto_usb	-> Just found usb devices   
 auto_usb_speed	-> USB write & read speed   
 re_test		-> run all the function test   
-re_tset_loop	-> RE testing loop
+re_tset_loop	-> RE testing loop   
 v4l2_test	-> camara test tool      
 
