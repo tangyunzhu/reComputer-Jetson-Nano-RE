@@ -7,10 +7,10 @@ show_result() {
 	r=$1
 	if [ $r -ne 0 ]; then
 		echo -e "\e[31m->Test FAIL \e[0m"
-		while [ 1 ]
-		do
-			sleep 1
-		done
+#		while [ 1 ]
+#		do
+#			sleep 1
+#		done
 	fi
 }
 
