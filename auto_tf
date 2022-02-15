@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "*************************"
+echo "* TF"
+echo "*************************"
+
+
+umount /dev/mmcblk1p1
+sleep 1
+mount /dev/mmcblk1p1 /media/
+sleep 1
+dd if=/dev/zero of=/media/test bs=1M count=5
+rm -rf /media/test
+sleep 1
+umount /dev/mmcblk1p1

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $1 ]; then
+	ip=$1
+else
+	ip="192.168.237.14"
+
+fi
+
+speed_min=900
+echo "iperf host ip is:" $ip
+iperf3 -c $ip  > iperf.log
+r=$(sed -n '16p' iperf.log)
+echo $r
+m=`expr index "$r" M`
+#echo $m
+S=${r:$m-7:5} 
+
+echo "Speed is: " $S "Mbits/sec"
+
+if [ $S -ge $speed_min ]
+
+then
+
+	echo "Ethernet Speed PASS"
+	exit 0
+else
+
+	echo "Ethernet Speed FAILED"
+	exit 1
+fi

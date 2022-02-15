@@ -1,0 +1,89 @@
+#!/bin/bash
+
+ng_flag=0
+usb2_count=2
+usb3_count=1
+usb3_flag="Class=MassStorage,Driver=usb-storage,5000M"
+usb2_flag="Class=MassStorage,Driver=usb-storage,480M"
+
+
+n=3
+while [ $n -ge 0 ]
+do
+        echo -ne $n.
+        sleep 1
+        let "n = $n - 1"
+done
+echo ""
+
+
+
+lsusb -t > log
+str=$(cat log)
+str=$(echo $str | sed 's/ //g')  #remove spance
+echo $str > log
+#cat log
+r=$(grep -o $usb2_flag log | wc -l)
+#echo $r
+if [ $r -eq $usb2_count ]; then
+	echo "USB hub's USB2.0 ok"  [$usb2_count/$r]
+else
+	echo "USB hub's USB2.0 fail"  [$usb2_count/$r]
+	ng_flag=1
+fi
+
+r=$(grep -o $usb3_flag log | wc -l)
+#echo $r
+if [ $r -eq $usb3_count ]; then
+	echo "USB hub's USB3.0 ok" [$usb3_count/$r]
+else
+	echo "USB hub's USB3.0 fail" [$usb3_count/$r]
+        ng_flag=2
+fi
+
+if [ $ng_flag -ne 0 ]; then
+	exit 2
+fi
+
+echo "------------------------------"
+echo "unplug usb and plug again:"
+
+n=12
+while [ $n -ge 0 ]
+do
+        echo -ne $n.
+        sleep 1
+        let "n = $n - 1"
+done
+echo ""
+
+
+
+
+lsusb -t > log
+str=$(cat log)
+str=$(echo $str | sed 's/ //g')  #remove spance
+echo $str > log
+#cat log
+r=$(grep -o $usb2_flag log | wc -l)
+#echo $r
+if [ $r -eq $usb2_count ]; then
+        echo "USB hub's USB2.0 ok"  [$usb2_count/$r]
+else
+        echo "USB hub's USB2.0 fail"  [$usb2_count/$r]
+        ng_flag=3
+fi
+
+r=$(grep -o $usb3_flag log | wc -l)
+#echo $r
+if [ $r -eq $usb3_count ]; then
+        echo "USB hub's USB3.0 ok" [$usb3_count/$r]
+else
+        echo "USB hub's USB3.0 fail" [$usb3_count/$r]
+        ng_flag=2
+fi
+
+if [ $ng_flag -ne 0 ]; then
+        exit 4
+fi
+

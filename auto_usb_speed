@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "*************************"
+echo "* USB 2.0&3.0"
+echo "*************************"
+
+disk=/dev/sda1
+echo Testing $disk ...
+mount $disk /mnt
+dd if=/dev/zero of=/mnt/test bs=1M count=20 conv=fdatasync
+sudo sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+dd if=/mnt/test of=/dev/null bs=1M
+rm  /mnt/test
+umount /mnt
+
+disk=/dev/sdb1
+echo Testing $disk ...
+mount $disk /mnt
+dd if=/dev/zero of=/mnt/test bs=1M count=20 conv=fdatasync
+sudo sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+dd if=/mnt/test of=/dev/null bs=1M
+rm  /mnt/test
+umount /mnt
+
+disk=/dev/sdc1
+echo Testing $disk ...
+mount $disk /mnt
+dd if=/dev/zero of=/mnt/test bs=1M count=20 conv=fdatasync
+sudo sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+dd if=/mnt/test of=/dev/null bs=1M
+rm  /mnt/test
+umount /mnt

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+
+show_result() {
+	echo ""
+	echo ""
+	r=$1
+	if [ $r -ne 0 ]; then
+		echo -e "\e[31m->Test FAIL \e[0m"
+		while [ 1 ]
+		do
+			sleep 1
+		done
+	fi
+}
+
+echo $1
+./auto_wlan0
+r=$?
+show_result $r
+
+./auto_tf
+
+./auto_usb_speed
+r=$?
+show_result $r
+
+./auto_ping $1
+r=$?
+show_result $r
+
+./auto_csi
+r=$?
+show_result $r
+
+echo -e "\e[32m->Test done, will loop\e[0m"

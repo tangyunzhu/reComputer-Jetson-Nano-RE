@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "*************************"
+echo "* BT"
+echo "*************************"
+
+hciconfig hci0 up
+hcitool scan
+
+echo ""
